@@ -5,7 +5,6 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'CPF / CNPJ / Usuário' }).click();
   await page.getByRole('textbox', { name: 'CPF / CNPJ / Usuário' }).fill('romildo.rezende');
   await page.getByRole('button', { name: 'Entrar no Portal' }).click();
-  await page.getByRole('link', { name: ' Faça login novamente' }).click();
   const page1Promise = page.waitForEvent('popup');
   await page.getByRole('link', { name: 'Validador de Assinatura' }).click();
   const page1 = await page1Promise;
