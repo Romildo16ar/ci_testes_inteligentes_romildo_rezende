@@ -1,0 +1,36 @@
+name: CI Playwright CIESP
+on:
+  push:
+    branches: [ main, master, 'feature/*', 'test/*' ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm' 
+
+    - name: Instalar dependências
+      run: npm ci
+
+    - name: Instalar Browsers Playwright
+      run: npx playwright install --with-deps
+
+    - name: Executar Testes
+      run: npx playwright test
+
+    - name: Salvar Relatórios (Artefatos)
+      if: always() 
+      uses: actions/upload-artifact@v4
+      with:
+        name: relatorio-da-tarefa
+        path: playwright-report/
+        retention-days: 7 
